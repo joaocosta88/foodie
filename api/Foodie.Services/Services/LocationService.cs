@@ -2,12 +2,6 @@
 using Foodie.Entities.Entities;
 using Foodie.Entities.Repositories;
 using Foodie.Services.Dtos;
-using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Foodie.Services.Services {
 	public class LocationService {
@@ -20,10 +14,12 @@ namespace Foodie.Services.Services {
 			_locationRepository = locationRepository;
 		}
 
-		public async Task AddLocationAsync(LocationDto dto)
+		public async Task<LocationDto> AddLocationAsync(LocationDto dto)
 		{
 			Location location = _mapper.Map<Location>(dto);
-			await _locationRepository.AddAsync(location);
+			location = await _locationRepository.AddAsync(location);
+
+			return _mapper.Map<LocationDto>(location);
 		}
 
 		public async Task<IEnumerable<LocationDto>> GetLocationsAsync()
