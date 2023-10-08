@@ -79,27 +79,66 @@ namespace Foodie.Services.Services {
 			await _userManager.AddToRoleAsync(user, FoodieUserRoles.User.ToString());
 
 			var emailConfirmationToken = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-			var token = EncodingUtils.EncodeAccountConfirmationToken(user.Email, emailConfirmationToken);
+			var token = EncodingUtils.EncodeAccountEditToken(user.Email, emailConfirmationToken);
 			
 			await _emailSender.SendAccountConfirmationEmailAsync(email, token);
 		}
 
 		public async Task ConfirmAccountAsync(string encodedToken)
 		{
-			var decodedToken = EncodingUtils.DecodeAccountConfirmationToken(encodedToken);
+			var (email, accountConfirmationToken) = EncodingUtils.DecodeAccountEditToken(encodedToken);
 
-			var user = await _userManager.FindByEmailAsync(decodedToken.email);
+			var user = await _userManager.FindByEmailAsync(email);
 			if (user == null)
 			{
 				throw new AccountConfirmationFailedException("An issue occurred confirming the account");
 			}
 
-			var res = await _userManager.ConfirmEmailAsync(user, decodedToken.accountConfirmationToken);
+			var res = await _userManager.ConfirmEmailAsync(user, accountConfirmationToken);
 		
 			if (!res.Succeeded)
 			{
 				throw new AccountConfirmationFailedException(string.Join("\n", res.Errors.Select(m => m.Code + ":" + m.Description)));
 			}
-		}		
+		}	
+		
+		public async Task GetResetPasswordTokenAsync(string email)
+		{
+			var user = await _userManager.FindByEmailAsync(email);
+
+			//we don't want to give feedback about wether the email is registered
+			if (user == null)
+			{
+				return;
+			}
+
+			var resetToken =
+				await _userManager.GeneratePasswordResetTokenAsync(user);
+			
+			await _emailSender.SendPasswordResetEmailAsync(email, resetToken);
+		}
+
+		public async Task ResetPasswordReset(string email, string token, string newPassword)
+		{
+			var user = await _userManager.FindByEmailAsync(email);
+			if (user == null)
+			{
+				throw new PasswordResetFailedException();
+			}
+
+			var resetOperation = await _userManager.ResetPasswordAsync(user, token, newPassword);
+			if (!resetOperation.Succeeded)
+			{
+				throw new PasswordResetFailedException(string.Join("\n", resetOperation.Errors.Select(m => m.Code + ":" + m.Description)));
+			}
+
+			//since we know that the user had access to inbo
+			//we can mark the account as confirmed
+			if (!user.EmailConfirmed)
+			{
+				var confirmationToken = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+				await _userManager.ConfirmEmailAsync(user, confirmationToken);
+			}
+		}
 	}
 }

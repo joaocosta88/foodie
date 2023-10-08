@@ -1,21 +1,16 @@
-﻿using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 using System.Web;
 
 namespace Foodie.Emails.Utils {
 	public static class EncodingUtils {
-		public static string EncodeAccountConfirmationToken(string email, string accountConfirmationToken)
+		public static string EncodeAccountEditToken(string email, string accountConfirmationToken)
 		{
 			byte[] texAsBytes = Encoding.ASCII.GetBytes($"{email}:{accountConfirmationToken}");
-			string base64 = System.Convert.ToBase64String(texAsBytes);
+			string base64 = Convert.ToBase64String(texAsBytes);
 			return HttpUtility.UrlEncode(base64);
 		}
 
-		public static (string email, string accountConfirmationToken) DecodeAccountConfirmationToken(string token)
+		public static (string email, string accountConfirmationToken) DecodeAccountEditToken(string token)
 		{
 			var urlDecoded = HttpUtility.UrlDecode(token);
 			byte[] base64Decoded = Convert.FromBase64String(urlDecoded);

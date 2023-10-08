@@ -9,15 +9,11 @@
 		}
 
 		public string CreateAccountConfirmationEmail(string confirmationToken)
-		{
-			return
-				$"Please use the followig link to validate your account. <br>" +
+		=> $"Please use the followig link to validate your account. <br>" +
 				$"{_emailUrlFactory.GetAccountConfirmationUrl(confirmationToken)}";
-		}
 
-		public string CreateAccountResetEmail(string resetToken)
-		{
-			return "";
-		}
+		public string CreatePasswordResetEmail(string email, string resetToken)
+		=> $"{email}, please use the followig token to reset your password. <br>" +
+				$"{resetToken}";
 	}
 }

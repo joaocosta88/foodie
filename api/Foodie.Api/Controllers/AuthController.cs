@@ -16,7 +16,7 @@ namespace Foodie.Api.Controllers {
 
 		[HttpPost]
 		[Route("login")]
-		public async Task<IActionResult> Login([FromBody] LoginModel model)
+		public async Task<IActionResult> LoginAsync([FromBody] LoginModel model)
 		{
 			if (!ModelState.IsValid)
 			{
@@ -30,7 +30,7 @@ namespace Foodie.Api.Controllers {
 
 		[HttpPost]
 		[Route("register")]
-		public async Task<IActionResult> Register([FromBody] RegisterModel model)
+		public async Task<IActionResult> RegisterAsync([FromBody] RegisterModel model)
 		{
 			if (!ModelState.IsValid)
 			{
@@ -44,10 +44,30 @@ namespace Foodie.Api.Controllers {
 
 		[HttpGet]
 		[Route("confirm")]
-		public async Task<IActionResult> ConfirmAccount(string token)
+		public async Task<IActionResult> ConfirmAccountAsync(string token)
 		{
 			await _authService.ConfirmAccountAsync(token);
-			return Ok();
+			return Ok("account confirmed");
+		}
+
+		[HttpGet]
+		[Route("reset")]
+		public async Task GetPasswordResetAsync(string email)
+		{
+			await _authService.GetResetPasswordTokenAsync(email);
+		}
+
+		[HttpPost]
+		[Route("reset")]
+		public async Task<IActionResult> ResetPasswordAsync([FromBody] PasswordResetModel model)
+		{
+			if (!ModelState.IsValid)
+			{
+				return BadRequest(ModelState);
+			}
+
+			await _authService.ResetPasswordReset(model.Email, model.Token, model.NewPassword);
+			return Ok("done");
 		}
 	}
 }

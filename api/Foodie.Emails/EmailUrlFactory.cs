@@ -8,8 +8,9 @@
 		}
 
 		public string GetAccountConfirmationUrl(string token)
-		{
-			return $"{_emailUrlConfiguration.Domain}{_emailUrlConfiguration.AccountRegistrationEndpoint}{token}";
-		}
+		=> $"{_emailUrlConfiguration.Domain}{_emailUrlConfiguration.AccountRegistrationEndpoint}{token}";
+
+		public string GetPasswordResetUrl(string token)
+		=> $"{_emailUrlConfiguration.Domain}{_emailUrlConfiguration.PasswordResetEndpoint}{token}";
 	}
 }

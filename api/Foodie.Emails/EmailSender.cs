@@ -24,10 +24,10 @@ namespace Foodie.Emails {
 			await SendEmailAsync(to, subject, template);
 		}
 
-		public async Task SendAccountResetEmailAsync(string to, string token)
+		public async Task SendPasswordResetEmailAsync(string to, string token)
 		{
 			string subject = "Foodie - Reset your account";
-			string template = _emailTemplateFactory.CreateAccountResetEmail(token); ;
+			string template = _emailTemplateFactory.CreatePasswordResetEmail(to, token); ;
 			await SendEmailAsync(to, subject, template);
 		}
 

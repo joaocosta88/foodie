@@ -11,8 +11,8 @@ namespace Foodie.Api.Tests {
 			string accountConfirmationToken = Guid.NewGuid().ToString();
 
 			//act
-			var token = EncodingUtils.EncodeAccountConfirmationToken(email, accountConfirmationToken);
-			var decodeResult = EncodingUtils.DecodeAccountConfirmationToken(token);
+			var token = EncodingUtils.EncodeAccountEditToken(email, accountConfirmationToken);
+			var decodeResult = EncodingUtils.DecodeAccountEditToken(token);
 
 			//assert
 			Assert.AreEqual(email, decodeResult.email);
