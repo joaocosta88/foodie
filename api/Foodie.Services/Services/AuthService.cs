@@ -1,17 +1,12 @@
 ﻿using Foodie.Emails;
+using Foodie.Emails.Utils;
 using Foodie.Entities.Entities;
 using Foodie.Services.Dtos;
 using Foodie.Services.Exceptions;
 using Foodie.Services.Helpers;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Foodie.Services.Services {
 	public class AuthService {
@@ -84,20 +79,27 @@ namespace Foodie.Services.Services {
 			await _userManager.AddToRoleAsync(user, FoodieUserRoles.User.ToString());
 
 			var emailConfirmationToken = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-			await _emailSender.SendAccountConfirmationEmailAsync(email, emailConfirmationToken);
+			var token = EncodingUtils.EncodeAccountConfirmationToken(user.Email, emailConfirmationToken);
+			
+			await _emailSender.SendAccountConfirmationEmailAsync(email, token);
 		}
 
-		public async Task ConfirmEmailAsync(string email, string token)
+		public async Task ConfirmAccountAsync(string encodedToken)
 		{
-			var user = await _userManager.FindByEmailAsync(email);
-			var res = await _userManager.ConfirmEmailAsync(user, token);
+			var decodedToken = EncodingUtils.DecodeAccountConfirmationToken(encodedToken);
+
+			var user = await _userManager.FindByEmailAsync(decodedToken.email);
+			if (user == null)
+			{
+				throw new AccountConfirmationFailedException("An issue occurred confirming the account");
+			}
+
+			var res = await _userManager.ConfirmEmailAsync(user, decodedToken.accountConfirmationToken);
 		
 			if (!res.Succeeded)
 			{
-
+				throw new AccountConfirmationFailedException(string.Join("\n", res.Errors.Select(m => m.Code + ":" + m.Description)));
 			}
-		}
-
-		
+		}		
 	}
 }

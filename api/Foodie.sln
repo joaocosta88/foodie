@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Foodie.Services", "Foodie.S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Foodie.Emails", "Foodie.Emails\Foodie.Emails.csproj", "{B9F338D1-E809-4777-A20C-CCB129CE4C5B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Foodie.Services.Tests", "Foodie.Api.Tests\Foodie.Services.Tests.csproj", "{565AC8BF-13FD-4431-B95C-73AC0CDFF87E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{B9F338D1-E809-4777-A20C-CCB129CE4C5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B9F338D1-E809-4777-A20C-CCB129CE4C5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B9F338D1-E809-4777-A20C-CCB129CE4C5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{565AC8BF-13FD-4431-B95C-73AC0CDFF87E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{565AC8BF-13FD-4431-B95C-73AC0CDFF87E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{565AC8BF-13FD-4431-B95C-73AC0CDFF87E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{565AC8BF-13FD-4431-B95C-73AC0CDFF87E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

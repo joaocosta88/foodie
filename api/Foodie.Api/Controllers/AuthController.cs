@@ -41,5 +41,13 @@ namespace Foodie.Api.Controllers {
 
 			return Ok();
 		}
+
+		[HttpGet]
+		[Route("confirm")]
+		public async Task<IActionResult> ConfirmAccount(string token)
+		{
+			await _authService.ConfirmAccountAsync(token);
+			return Ok();
+		}
 	}
 }

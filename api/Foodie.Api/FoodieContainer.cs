@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using System.Configuration;
 using System.Text;
 
 namespace Foodie.Api {
@@ -21,13 +22,19 @@ namespace Foodie.Api {
 			services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 			services.AddDbContext<FoodieDbContext>(opt => opt.UseMySQL(configuration.GetConnectionString("FoodieDatabase")));
 
+			//emails
+			var emailConfig = configuration.GetSection("Emails:EmailUrlConfiguration").Get<EmailUrlConfiguration>();
+			services.AddSingleton<EmailUrlConfiguration>(emailConfig);
+			services.AddScoped<EmailUrlFactory>();
+			services.AddScoped<EmailTemplateFactory>();
 			services.AddScoped(m =>
 			{
 				var sendGridApiKey = configuration["Emails:SendGridApiKey"];
 				var fromEmailAddress = configuration["Emails:From"];
 				var aliasEmailAddress = configuration["Emails:Alias"];
+				var emailTemplateService = m.GetService<EmailTemplateFactory>();
 
-				return new EmailSender(sendGridApiKey, fromEmailAddress, aliasEmailAddress);
+				return new EmailSender(sendGridApiKey, fromEmailAddress, aliasEmailAddress, emailTemplateService);
 			});
 		}
 
@@ -39,7 +46,7 @@ namespace Foodie.Api {
 				new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Auth:Secret"])),
 				configuration["Auth:ValidIssuer"],
 				configuration["Auth:ValidAudience"],
-				Int32.Parse(configuration["Auth:TokenLifetimeInMinutes"])));
+				configuration.GetValue<int>("Auth:TokenLifetimeInMinutes")));
 			services.AddIdentity<FoodieUser, IdentityRole>(
 				options =>
 				{

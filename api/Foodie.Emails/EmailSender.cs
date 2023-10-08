@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Foodie.Emails.Exceptions;
+using Newtonsoft.Json;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 
@@ -7,24 +8,26 @@ namespace Foodie.Emails {
 
 		private readonly SendGridClient _sendGridClient;
 		private readonly EmailAddress _fromEmailAddress;
-		public EmailSender(string sendGridApiKey, string from, string alias)
+		private readonly EmailTemplateFactory _emailTemplateFactory;
+		public EmailSender(string sendGridApiKey, string from, string alias, EmailTemplateFactory emailTemplateFactory)
 		{
 			_sendGridClient = new SendGridClient(sendGridApiKey);
 			_fromEmailAddress = new EmailAddress(from, alias);
+			_emailTemplateFactory = emailTemplateFactory;
 		}
 
 		public async Task SendAccountConfirmationEmailAsync(string to, string token)
 		{
 			string subject = "Foodie - Confirm your account";
-			string template = $"Please use the token {token} to validate your email";
+			string template = _emailTemplateFactory.CreateAccountConfirmationEmail(token);
 
 			await SendEmailAsync(to, subject, template);
 		}
 
-		public async Task SendAccountResetEmailAsync(string to)
+		public async Task SendAccountResetEmailAsync(string to, string token)
 		{
 			string subject = "Foodie - Reset your account";
-			string template = "";
+			string template = _emailTemplateFactory.CreateAccountResetEmail(token); ;
 			await SendEmailAsync(to, subject, template);
 		}
 
