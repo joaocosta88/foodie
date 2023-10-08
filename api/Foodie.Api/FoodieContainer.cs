@@ -1,4 +1,5 @@
-﻿using Foodie.Entities;
+﻿using Foodie.Emails;
+using Foodie.Entities;
 using Foodie.Entities.Entities;
 using Foodie.Entities.Repositories;
 using Foodie.Services.Helpers;
@@ -19,6 +20,15 @@ namespace Foodie.Api {
 			services.AddScoped<LocationRepository>();
 			services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 			services.AddDbContext<FoodieDbContext>(opt => opt.UseMySQL(configuration.GetConnectionString("FoodieDatabase")));
+
+			services.AddScoped(m =>
+			{
+				var sendGridApiKey = configuration["Emails:SendGridApiKey"];
+				var fromEmailAddress = configuration["Emails:From"];
+				var aliasEmailAddress = configuration["Emails:Alias"];
+
+				return new EmailSender(sendGridApiKey, fromEmailAddress, aliasEmailAddress);
+			});
 		}
 
 		public static void RegisterAuthenticationServices(this IServiceCollection services, IConfiguration configuration)
@@ -28,7 +38,7 @@ namespace Foodie.Api {
 			new AuthHelper(
 				new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Auth:Secret"])),
 				configuration["Auth:ValidIssuer"],
-				configuration["Auth:ValidAudience"], 
+				configuration["Auth:ValidAudience"],
 				Int32.Parse(configuration["Auth:TokenLifetimeInMinutes"])));
 			services.AddIdentity<FoodieUser, IdentityRole>(
 				options =>

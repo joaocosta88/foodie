@@ -1,4 +1,5 @@
-﻿using Foodie.Entities.Entities;
+﻿using Foodie.Emails;
+using Foodie.Entities.Entities;
 using Foodie.Services.Dtos;
 using Foodie.Services.Exceptions;
 using Foodie.Services.Helpers;
@@ -17,12 +18,14 @@ namespace Foodie.Services.Services {
 		private readonly UserManager<FoodieUser> _userManager;
 		private readonly RoleManager<IdentityRole> _roleManager;
 		private readonly AuthHelper _authHelper;
+		private readonly EmailSender _emailSender;
 
-		public AuthService(UserManager<FoodieUser> userManager, RoleManager<IdentityRole> roleManager, AuthHelper authHelper)
+		public AuthService(UserManager<FoodieUser> userManager, RoleManager<IdentityRole> roleManager, AuthHelper authHelper, EmailSender emailSender)
 		{
 			_userManager = userManager;
 			_roleManager = roleManager;
 			_authHelper = authHelper;
+			_emailSender = emailSender;
 		}
 
 		public async Task<AuthTokenDto> LoginAsync(string email, string password)
@@ -31,7 +34,11 @@ namespace Foodie.Services.Services {
 			var user = await _userManager.FindByEmailAsync(email);
 			if (user == null || !(await _userManager.CheckPasswordAsync(user, password)))
 			{
-				throw new AuthenticationFailedException();
+				throw new AuthenticationFailedException("User does not exist or invalid password");
+			}
+			if (!user.EmailConfirmed)
+			{
+				throw new AuthenticationFailedException("User's email is not confirmed");
 			}
 
 			var authClaims = new List<Claim>
@@ -75,6 +82,9 @@ namespace Foodie.Services.Services {
 			}
 
 			await _userManager.AddToRoleAsync(user, FoodieUserRoles.User.ToString());
+
+			var emailConfirmationToken = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+			await _emailSender.SendAccountConfirmationEmailAsync(email, emailConfirmationToken);
 		}
 
 		public async Task ConfirmEmailAsync(string email, string token)
