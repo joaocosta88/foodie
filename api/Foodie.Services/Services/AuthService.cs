@@ -109,7 +109,7 @@ namespace Foodie.Services.Services {
 			//we don't want to give feedback about wether the email is registered
 			if (user == null)
 			{
-				return;
+ 				return;
 			}
 
 			var resetToken =
