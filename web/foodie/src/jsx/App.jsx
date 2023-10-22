@@ -1,6 +1,6 @@
 import GMap from './renderMap'
 import Header from './header'
-import "./App.css";
+import "../css/App.css";
 
 const App = () => {
   return (
