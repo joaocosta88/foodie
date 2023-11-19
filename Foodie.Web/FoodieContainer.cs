@@ -14,8 +14,11 @@ namespace Foodie.Web {
 	public static class FoodieContainer {
 		public static void RegisterFoodieServices(this IServiceCollection services, IConfiguration configuration)
 		{
-			// define your specific services
-			services.AddScoped<LocationService>();
+            services.AddHealthChecks()
+                .AddMySql(configuration.GetConnectionString("FoodieDatabase"));
+
+            // define your specific services
+            services.AddScoped<LocationService>();
 			services.AddScoped<LocationRepository>();
 			services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 			services.AddDbContext<FoodieDbContext>(opt => opt.UseMySQL(configuration.GetConnectionString("FoodieDatabase")));

@@ -1,42 +1,51 @@
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+
 namespace Foodie.Web {
-	public class Program {
-		public static void Main(string[] args)
-		{
-			var builder = WebApplication.CreateBuilder(args);
+    public class Program {
+        public static void Main(string[] args)
+        {
+            var builder = WebApplication.CreateBuilder(args);
 
-			
-			builder.Services.RegisterFoodieServices(builder.Configuration);
-			builder.Services.RegisterAuthenticationServices(builder.Configuration);
 
-			builder.Services.AddControllersWithViews();
+            builder.Services.RegisterFoodieServices(builder.Configuration);
+            builder.Services.RegisterAuthenticationServices(builder.Configuration);
 
-			var app = builder.Build();
+            builder.Services.AddControllersWithViews();
 
-			// Configure the HTTP request pipeline.
-			if (app.Environment.IsDevelopment())
-			{
-				app.UseMigrationsEndPoint();
-			}
-			else
-			{
-				app.UseExceptionHandler("/Home/Error");
-				// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-				app.UseHsts();
-			}
+            var app = builder.Build();
 
-			app.UseHttpsRedirection();
-			app.UseStaticFiles();
+            app.MapHealthChecks("/health", new HealthCheckOptions
+            {
+                ResponseWriter = HealthCheckExtensions.WriteResponse
+            });
 
-			app.UseRouting();
 
-			app.UseAuthorization();
+            // Configure the HTTP request pipeline.
+            if (app.Environment.IsDevelopment())
+            {
+                app.UseMigrationsEndPoint();
+            }
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
+                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                app.UseHsts();
+            }
 
-			app.MapControllerRoute(
-				name: "default",
-				pattern: "{controller=Home}/{action=Index}/{id?}");
-			app.MapRazorPages();
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
 
-			app.Run();
-		}
-	}
+            app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
+
+            app.MapControllerRoute(
+                name: "default",
+                pattern: "{controller=Home}/{action=Index}/{id?}");
+            app.MapRazorPages();
+
+            app.Run();
+        }
+    }
 }
