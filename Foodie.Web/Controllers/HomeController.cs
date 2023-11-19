@@ -1,4 +1,4 @@
-﻿using Foodie.Web.Models;
+using Foodie.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 

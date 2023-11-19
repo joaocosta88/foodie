@@ -11,14 +11,12 @@ using System.Security.Claims;
 namespace Foodie.Services.Services {
 	public class AuthService {
 		private readonly UserManager<FoodieUser> _userManager;
-		private readonly RoleManager<IdentityRole> _roleManager;
 		private readonly AuthHelper _authHelper;
 		private readonly EmailSender _emailSender;
 
-		public AuthService(UserManager<FoodieUser> userManager, RoleManager<IdentityRole> roleManager, AuthHelper authHelper, EmailSender emailSender)
+		public AuthService(UserManager<FoodieUser> userManager, AuthHelper authHelper, EmailSender emailSender)
 		{
 			_userManager = userManager;
-			_roleManager = roleManager;
 			_authHelper = authHelper;
 			_emailSender = emailSender;
 		}

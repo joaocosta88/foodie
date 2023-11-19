@@ -21,6 +21,7 @@ namespace Foodie.Api {
 			services.AddScoped<LocationRepository>();
 			services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 			services.AddDbContext<FoodieDbContext>(opt => opt.UseMySQL(configuration.GetConnectionString("FoodieDatabase")));
+			services.AddDatabaseDeveloperPageExceptionFilter();
 
 			//emails
 			var emailConfig = configuration.GetSection("Emails:EmailUrlConfiguration").Get<EmailUrlConfiguration>();
@@ -47,11 +48,7 @@ namespace Foodie.Api {
 				configuration["Auth:ValidIssuer"],
 				configuration["Auth:ValidAudience"],
 				configuration.GetValue<int>("Auth:TokenLifetimeInMinutes")));
-			services.AddIdentity<FoodieUser, IdentityRole>(
-				options =>
-				{
-					options.SignIn.RequireConfirmedEmail = true;
-				})
+			services.AddDefaultIdentity<FoodieUser>(options => 	options.SignIn.RequireConfirmedEmail = true)
 				.AddEntityFrameworkStores<FoodieDbContext>()
 				.AddDefaultTokenProviders();
 

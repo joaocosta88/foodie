@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Foodie.Emails", "Foodie.Ema
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Foodie.Services.Tests", "Foodie.Api.Tests\Foodie.Services.Tests.csproj", "{565AC8BF-13FD-4431-B95C-73AC0CDFF87E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Foodie.Web", "Foodie.Web\Foodie.Web.csproj", "{0A9D2A2E-EDBE-439A-92DC-A8E74267EAC2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Foodie.Web2", "Foodie.Web2\Foodie.Web2.csproj", "{0A9D2A2E-EDBE-439A-92DC-A8E74267EAC2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Foodie.Web", "Foodie.Web\Foodie.Web.csproj", "{1D66AFB1-C10C-411E-90AB-BEB562D17986}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{0A9D2A2E-EDBE-439A-92DC-A8E74267EAC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0A9D2A2E-EDBE-439A-92DC-A8E74267EAC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0A9D2A2E-EDBE-439A-92DC-A8E74267EAC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D66AFB1-C10C-411E-90AB-BEB562D17986}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D66AFB1-C10C-411E-90AB-BEB562D17986}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D66AFB1-C10C-411E-90AB-BEB562D17986}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D66AFB1-C10C-411E-90AB-BEB562D17986}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

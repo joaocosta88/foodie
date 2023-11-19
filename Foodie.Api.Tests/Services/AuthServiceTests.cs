@@ -17,7 +17,7 @@ namespace Foodie.Services.Tests.Services {
 		{
 			userManagerMock = new Mock<UserManager<FoodieUser>>(Mock.Of<IUserStore<FoodieUser>>(), null, null, null, null, null, null, null, null);
 
-			authService = new AuthService(userManagerMock.Object, null, null, null);
+			authService = new AuthService(userManagerMock.Object, null, null);
 		}
 
 		[TestMethod]
