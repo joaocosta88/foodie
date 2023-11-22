@@ -10,6 +10,8 @@ namespace Foodie.Web {
 
             var options = new JsonWriterOptions { Indented = true };
 
+
+
             using var memoryStream = new MemoryStream();
             using (var jsonWriter = new Utf8JsonWriter(memoryStream, options))
             {
@@ -41,7 +43,6 @@ namespace Foodie.Web {
                 jsonWriter.WriteEndObject();
                 jsonWriter.WriteEndObject();
             }
-
             return context.Response.WriteAsync(
                 Encoding.UTF8.GetString(memoryStream.ToArray()));
         }

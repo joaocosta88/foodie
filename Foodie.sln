@@ -3,19 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33801.468
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Foodie.Api", "Foodie.Api\Foodie.Api.csproj", "{B2EF1CEC-0E7B-4A0C-9C3A-DC79D3F24587}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Foodie.Entities", "Foodie.Entities\Foodie.Entities.csproj", "{57F22819-14CF-47BB-AC46-0DDFBD5DBF86}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Foodie.Services", "Foodie.Services\Foodie.Services.csproj", "{98D4EB6F-1F8D-45B2-B53E-BF2C774A4D59}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Foodie.Emails", "Foodie.Emails\Foodie.Emails.csproj", "{B9F338D1-E809-4777-A20C-CCB129CE4C5B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Foodie.Services.Tests", "Foodie.Api.Tests\Foodie.Services.Tests.csproj", "{565AC8BF-13FD-4431-B95C-73AC0CDFF87E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Foodie.Services.Tests", "Foodie.Services.Tests\Foodie.Services.Tests.csproj", "{565AC8BF-13FD-4431-B95C-73AC0CDFF87E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Foodie.Web2", "Foodie.Web2\Foodie.Web2.csproj", "{0A9D2A2E-EDBE-439A-92DC-A8E74267EAC2}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Foodie.Web", "Foodie.Web\Foodie.Web.csproj", "{1D66AFB1-C10C-411E-90AB-BEB562D17986}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Foodie.Web", "Foodie.Web\Foodie.Web.csproj", "{1D66AFB1-C10C-411E-90AB-BEB562D17986}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +19,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{B2EF1CEC-0E7B-4A0C-9C3A-DC79D3F24587}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B2EF1CEC-0E7B-4A0C-9C3A-DC79D3F24587}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B2EF1CEC-0E7B-4A0C-9C3A-DC79D3F24587}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B2EF1CEC-0E7B-4A0C-9C3A-DC79D3F24587}.Release|Any CPU.Build.0 = Release|Any CPU
 		{57F22819-14CF-47BB-AC46-0DDFBD5DBF86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{57F22819-14CF-47BB-AC46-0DDFBD5DBF86}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{57F22819-14CF-47BB-AC46-0DDFBD5DBF86}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -43,10 +35,6 @@ Global
 		{565AC8BF-13FD-4431-B95C-73AC0CDFF87E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{565AC8BF-13FD-4431-B95C-73AC0CDFF87E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{565AC8BF-13FD-4431-B95C-73AC0CDFF87E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0A9D2A2E-EDBE-439A-92DC-A8E74267EAC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0A9D2A2E-EDBE-439A-92DC-A8E74267EAC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0A9D2A2E-EDBE-439A-92DC-A8E74267EAC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0A9D2A2E-EDBE-439A-92DC-A8E74267EAC2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1D66AFB1-C10C-411E-90AB-BEB562D17986}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1D66AFB1-C10C-411E-90AB-BEB562D17986}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1D66AFB1-C10C-411E-90AB-BEB562D17986}.Release|Any CPU.ActiveCfg = Release|Any CPU

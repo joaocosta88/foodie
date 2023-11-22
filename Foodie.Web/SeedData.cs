@@ -2,7 +2,7 @@
 using Foodie.Entities.Entities;
 using Microsoft.AspNetCore.Identity;
 
-namespace Foodie.Api {
+namespace Foodie.Web {
 	public class SeedData {
 		public static async Task InitializeAsync(IServiceProvider serviceProvider)
 		{

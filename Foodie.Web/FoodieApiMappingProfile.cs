@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 //using Foodie.Api.Models;
 
-namespace Foodie.Api {
+namespace Foodie.Web {
 	public class FoodieApiMappingProfile : Profile {
 		public FoodieApiMappingProfile()
 		{
