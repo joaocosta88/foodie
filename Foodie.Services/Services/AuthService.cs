@@ -12,9 +12,9 @@ namespace Foodie.Services.Services {
 	public class AuthService {
 		private readonly UserManager<FoodieUser> _userManager;
 		private readonly AuthHelper _authHelper;
-		private readonly EmailSender _emailSender;
+		private readonly IEmailSender _emailSender;
 
-		public AuthService(UserManager<FoodieUser> userManager, AuthHelper authHelper, EmailSender emailSender)
+		public AuthService(UserManager<FoodieUser> userManager, AuthHelper authHelper, IEmailSender emailSender)
 		{
 			_userManager = userManager;
 			_authHelper = authHelper;

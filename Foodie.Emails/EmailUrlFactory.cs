@@ -1,10 +1,12 @@
-﻿namespace Foodie.Emails {
+﻿using Microsoft.Extensions.Options;
+
+namespace Foodie.Emails {
 	public class EmailUrlFactory {
 		private readonly EmailUrlConfiguration _emailUrlConfiguration;
 
-		public EmailUrlFactory(EmailUrlConfiguration emailUrlConfiguration)
+		public EmailUrlFactory(IOptions<AuthMessageSenderOptions> optionsAccessor)
 		{
-			_emailUrlConfiguration = emailUrlConfiguration;
+			_emailUrlConfiguration = optionsAccessor.Value.EmailUrlConfiguration;
 		}
 
 		public string GetAccountConfirmationUrl(string token)

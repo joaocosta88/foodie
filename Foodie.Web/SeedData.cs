@@ -6,17 +6,15 @@ namespace Foodie.Web {
 	public class SeedData {
 		public static async Task InitializeAsync(IServiceProvider serviceProvider)
 		{
-			using (var scope = serviceProvider.CreateScope())
-			{
-				var provider = scope.ServiceProvider;
-				var context = provider.GetRequiredService<FoodieDbContext>();
-				var userManager = provider.GetRequiredService<UserManager<FoodieUser>>();
-				var roleManager = provider.GetRequiredService<RoleManager<IdentityRole>>();
+            using var scope = serviceProvider.CreateScope();
+            var provider = scope.ServiceProvider;
+            var context = provider.GetRequiredService<FoodieDbContext>();
+            var userManager = provider.GetRequiredService<UserManager<FoodieUser>>();
+            var roleManager = provider.GetRequiredService<RoleManager<IdentityRole>>();
 
-				// automigration 
-				await SeedRolesAsync(roleManager);
-			}
-		}
+            // automigration 
+            await SeedRolesAsync(roleManager);
+        }
 
 		private static async Task SeedRolesAsync(RoleManager<IdentityRole> roleManager)
 		{

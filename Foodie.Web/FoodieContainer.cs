@@ -6,39 +6,34 @@ using Foodie.Services.Helpers;
 using Foodie.Services.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using System.Configuration;
 using System.Text;
 
 namespace Foodie.Web {
     public static class FoodieContainer {
         public static void RegisterFoodieServices(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddHealthChecks()
-                .AddMySql(configuration.GetConnectionString("FoodieDatabase"));
 
             // define your specific services
             services.AddScoped<LocationService>();
             services.AddScoped<LocationRepository>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.Configure<AuthMessageSenderOptions>(configuration);
 
-            services.AddDbContext<FoodieDbContext>(opt => opt.UseMySQL(configuration.GetConnectionString("FoodieDatabase")));
+            var connString = configuration.GetConnectionString("FoodieDatabase");
+            services.AddDbContext<FoodieDbContext>(opt => opt.UseMySql(connString, ServerVersion.AutoDetect(connString)));
+            services.AddHealthChecks().AddMySql(connString);
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             //emails
-            var emailConfig = configuration.GetSection("Emails:EmailUrlConfiguration").Get<EmailUrlConfiguration>();
-            services.AddSingleton<EmailUrlConfiguration>(emailConfig);
+            services.Configure<AuthMessageSenderOptions>(configuration.GetSection("Emails"));
             services.AddScoped<EmailUrlFactory>();
             services.AddScoped<EmailTemplateFactory>();
-            services.AddScoped(m =>
-            {
-                var sendGridApiKey = configuration["Emails:SendGridApiKey"];
-                var fromEmailAddress = configuration["Emails:From"];
-                var aliasEmailAddress = configuration["Emails:Alias"];
-                var emailTemplateService = m.GetService<EmailTemplateFactory>();
-
-                return new EmailSender(sendGridApiKey, fromEmailAddress, aliasEmailAddress, emailTemplateService);
-            });
+            services.AddScoped<Microsoft.AspNetCore.Identity.UI.Services.IEmailSender, EmailSender>();
+            services.AddScoped<Foodie.Emails.IEmailSender, EmailSender>();
         }
 
         public static void RegisterAuthenticationServices(this IServiceCollection services, IConfiguration configuration)

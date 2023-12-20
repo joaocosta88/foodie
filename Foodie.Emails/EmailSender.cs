@@ -1,21 +1,30 @@
 ﻿using Foodie.Emails.Exceptions;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 
 namespace Foodie.Emails {
-	public class EmailSender {
+	public class EmailSender : Microsoft.AspNetCore.Identity.UI.Services.IEmailSender, Foodie.Emails.IEmailSender {
 
-		private readonly SendGridClient _sendGridClient;
-		private readonly EmailAddress _fromEmailAddress;
-		private readonly EmailTemplateFactory _emailTemplateFactory;
-		public EmailSender(string sendGridApiKey, string from, string alias, EmailTemplateFactory emailTemplateFactory)
-		{
-			_sendGridClient = new SendGridClient(sendGridApiKey);
-			_fromEmailAddress = new EmailAddress(from, alias);
-			_emailTemplateFactory = emailTemplateFactory;
-		}
+        private readonly ILogger _logger;
+        private readonly SendGridClient _sendGridClient;
+        private readonly EmailTemplateFactory _emailTemplateFactory;
+        private readonly EmailAddress _fromEmailAddress;
 
+        private readonly AuthMessageSenderOptions Options;
+
+        public EmailSender(IOptions<AuthMessageSenderOptions> optionsAccessor, EmailTemplateFactory emailTemplateFactory, ILogger<EmailSender> logger)
+        {
+            Options = optionsAccessor.Value;
+            _logger = logger;
+            _emailTemplateFactory = emailTemplateFactory;
+
+            _fromEmailAddress = new EmailAddress(Options.From, Options.Alias);
+            _sendGridClient = new SendGridClient(Options.SendGridKey);
+        }
 		public async Task SendAccountConfirmationEmailAsync(string to, string token)
 		{
 			string subject = "Foodie - Confirm your account";
@@ -31,22 +40,22 @@ namespace Foodie.Emails {
 			await SendEmailAsync(to, subject, template);
 		}
 
-		private async Task SendEmailAsync(string to, string subject, string template)
-		{
-			var msg = new SendGridMessage
-			{
-				From = _fromEmailAddress,
-				Subject = subject,
-				PlainTextContent = template
-			};
+        public async Task SendEmailAsync(string email, string subject, string htmlMessage)
+        {
+            var msg = new SendGridMessage
+            {
+                From = _fromEmailAddress,
+                Subject = subject,
+                HtmlContent = htmlMessage
+            };
 
-			msg.AddTo(to);
-			var response = await _sendGridClient.SendEmailAsync(msg);
-			if (!response.IsSuccessStatusCode)
-			{
-				var responseBody = await response.DeserializeResponseBodyAsync();
-				throw new EmailCouldNotBeSentException(JsonConvert.SerializeObject(responseBody));
-			}
-		}
-	}
+            msg.AddTo(email);
+            var response = await _sendGridClient.SendEmailAsync(msg);
+            if (!response.IsSuccessStatusCode)
+            {
+                var responseBody = await response.DeserializeResponseBodyAsync();
+                throw new EmailCouldNotBeSentException(JsonConvert.SerializeObject(responseBody));
+            }
+        }
+    }
 }
