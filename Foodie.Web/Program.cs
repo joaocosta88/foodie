@@ -5,7 +5,9 @@ namespace Foodie.Web {
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            builder.Logging.ClearProviders();
+			builder.Services.AddHttpClient();
+
+			builder.Logging.ClearProviders();
             builder.Logging.AddConsole();
 
             builder.Services.RegisterFoodieServices(builder.Configuration);

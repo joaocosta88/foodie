@@ -9,7 +9,7 @@ namespace Foodie.Web.ViewComponents {
 			_configuration = configuration;
 		}
 
-		public async Task<IViewComponentResult> InvokeAsync()
+		public async Task<IViewComponentResult> InvokeAsync(string searchString = "")
 		{
 			ViewData["GMapsKey"] = _configuration["GoogleMapsApiKey"];
 
