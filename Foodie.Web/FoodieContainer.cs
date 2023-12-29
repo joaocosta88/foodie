@@ -7,30 +7,42 @@ using Foodie.GoogleApis;
 using Foodie.GoogleApis.Http;
 using Foodie.Services.Helpers;
 using Foodie.Services.Services;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Foodie.TripAdvisorApi;
+using Foodie.TripAdvisorApi.Http;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using System.Configuration;
 using System.Text;
 
 namespace Foodie.Web {
 	public static class FoodieContainer {
 		public static void RegisterFoodieServices(this IServiceCollection services, IConfiguration configuration)
 		{
-			services.AddScoped<LocationService>();
-			services.AddScoped<PlacesApiInvoker>();
+
+			services.AddScoped<GooglePlacesApiInvoker>();
 			services.AddScoped<GoogleApiClient>(m =>
 			{
-				var googleHttpClientFactory = m.GetRequiredService<FoodieHttpClientFactory>();
+				var httpClientFactory = m.GetRequiredService<FoodieHttpClientFactory>();
 				var googleApiKey = configuration["GoogleMapsApiKey"];
 
-				return new GoogleApiClient(googleHttpClientFactory, googleApiKey);
+				return new GoogleApiClient(httpClientFactory, googleApiKey);
 			});
-			services.AddScoped<FoodieHttpClientFactory>();
 			services.AddScoped(opt => new GoogleApiUrlFactory(configuration["GoogleMapsApiKey"]!));
+
+			services.AddScoped<TripAdvisorApiInvoker>();
+			services.AddScoped<TripAdvisorApiClient>(m =>
+			{
+				var httpClientFactory = m.GetRequiredService<FoodieHttpClientFactory>();
+				var tripAdvisorApiKey = configuration["tripAdvisorApiKey"];
+
+				return new TripAdvisorApiClient(httpClientFactory, tripAdvisorApiKey);
+			});
+			services.AddScoped(opt => new TripAdvisorUrlFactory(configuration["tripAdvisorApiKey"]!));
+
+			services.AddScoped<FoodieHttpClientFactory>();
+			
 			services.AddScoped<PlacesService>();
+			services.AddScoped<LocationService>();
 			services.AddScoped<LocationRepository>();
 			services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 			services.Configure<AuthMessageSenderOptions>(configuration);

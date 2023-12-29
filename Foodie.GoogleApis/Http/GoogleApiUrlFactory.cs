@@ -16,5 +16,8 @@
 
         public string GetPlacesV2ApiSearchUrl()
             => "https://places.googleapis.com/v1/places:searchText";
+
+        public string GetPlaceDetails(string placeId)
+                    => $"https://places.googleapis.com/v1/places/{placeId}";
     }
 }

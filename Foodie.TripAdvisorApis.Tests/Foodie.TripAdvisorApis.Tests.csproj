@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Foodie.GoogleApis\Foodie.GoogleApis.csproj" />
+    <ProjectReference Include="..\Foodie.TripAdvisorApi\Foodie.TripAdvisorApi.csproj" />
     <ProjectReference Include="..\Foodie.Web\Foodie.Web.csproj" />
   </ItemGroup>
 

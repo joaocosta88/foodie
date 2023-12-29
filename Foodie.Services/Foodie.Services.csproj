@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.1" />
+    <PackageReference Include="GeoCoordinate.NetCore" Version="1.0.0.1" />
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="7.0.3" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.0.3" />
   </ItemGroup>
@@ -15,6 +16,8 @@
   <ItemGroup>
     <ProjectReference Include="..\Foodie.Emails\Foodie.Emails.csproj" />
     <ProjectReference Include="..\Foodie.Entities\Foodie.Entities.csproj" />
+    <ProjectReference Include="..\Foodie.GoogleApis\Foodie.GoogleApis.csproj" />
+    <ProjectReference Include="..\Foodie.TripAdvisorApi\Foodie.TripAdvisorApi.csproj" />
   </ItemGroup>
 
 </Project>

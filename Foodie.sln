@@ -13,11 +13,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Foodie.Services.Tests", "Fo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Foodie.Web", "Foodie.Web\Foodie.Web.csproj", "{1D66AFB1-C10C-411E-90AB-BEB562D17986}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Foodie.GoogleApis", "Foodie.GoogleApis\Foodie.GoogleApis.csproj", "{28ADC593-FA1F-470F-A4F6-4F4DC9A27071}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Foodie.GoogleApis", "Foodie.GoogleApis\Foodie.GoogleApis.csproj", "{28ADC593-FA1F-470F-A4F6-4F4DC9A27071}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Foodie.Common", "Foodie.Common\Foodie.Common.csproj", "{E9101DB3-FBBF-4D26-8ED0-6FA737BA73B8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Foodie.Common", "Foodie.Common\Foodie.Common.csproj", "{E9101DB3-FBBF-4D26-8ED0-6FA737BA73B8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Foodie.GoogleApis.Tests", "Foodie.GoogleApis.Tests\Foodie.GoogleApis.Tests.csproj", "{9E238C1E-B567-49D7-A699-04414D87B31B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Foodie.GoogleApis.Tests", "Foodie.GoogleApis.Tests\Foodie.GoogleApis.Tests.csproj", "{9E238C1E-B567-49D7-A699-04414D87B31B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Foodie.TripAdvisorApi", "Foodie.TripAdvisorApi\Foodie.TripAdvisorApi.csproj", "{C78AE2B5-6DD0-4575-8020-D0C1AB2B3081}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Foodie.TripAdvisorApis.Tests", "Foodie.TripAdvisorApis.Tests\Foodie.TripAdvisorApis.Tests.csproj", "{2AF789A2-A1EF-4F4F-93B5-B90F26DE913F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{2B579EB7-6778-481C-BAA4-DC8845BE0696}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,9 +63,22 @@ Global
 		{9E238C1E-B567-49D7-A699-04414D87B31B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9E238C1E-B567-49D7-A699-04414D87B31B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9E238C1E-B567-49D7-A699-04414D87B31B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C78AE2B5-6DD0-4575-8020-D0C1AB2B3081}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C78AE2B5-6DD0-4575-8020-D0C1AB2B3081}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C78AE2B5-6DD0-4575-8020-D0C1AB2B3081}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C78AE2B5-6DD0-4575-8020-D0C1AB2B3081}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2AF789A2-A1EF-4F4F-93B5-B90F26DE913F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2AF789A2-A1EF-4F4F-93B5-B90F26DE913F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2AF789A2-A1EF-4F4F-93B5-B90F26DE913F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2AF789A2-A1EF-4F4F-93B5-B90F26DE913F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{565AC8BF-13FD-4431-B95C-73AC0CDFF87E} = {2B579EB7-6778-481C-BAA4-DC8845BE0696}
+		{9E238C1E-B567-49D7-A699-04414D87B31B} = {2B579EB7-6778-481C-BAA4-DC8845BE0696}
+		{2AF789A2-A1EF-4F4F-93B5-B90F26DE913F} = {2B579EB7-6778-481C-BAA4-DC8845BE0696}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8169CB6C-9C9B-4E0D-99B5-FF8059B52DF9}

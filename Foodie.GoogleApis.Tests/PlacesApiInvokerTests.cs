@@ -1,3 +1,4 @@
+using Foodie.Common;
 using Foodie.GoogleApis.Http;
 using Foodie.Web.Controllers;
 using Microsoft.Extensions.Configuration;
@@ -8,7 +9,7 @@ namespace Foodie.GoogleApis.Tests
     [TestClass]
 	public class PlacesApiInvokerTests {
 
-		private PlacesApiInvoker? _invoker;
+		private GooglePlacesApiInvoker? _invoker;
 
 		[TestInitialize]
 		public void Init()
@@ -16,20 +17,20 @@ namespace Foodie.GoogleApis.Tests
 			var configuration = new ConfigurationBuilder().AddUserSecrets<HomeController>().Build();
 			var apiKey = configuration["GoogleMapsApiKey"];
 
-			Mock<GoogleHttpClientFactory> googleHttpClientFactory = new Mock<GoogleHttpClientFactory>();
-			googleHttpClientFactory.Setup(m => m.CreateClient()).Returns(new HttpClient());
+			Mock<FoodieHttpClientFactory> httpClientFactory = new Mock<FoodieHttpClientFactory>();
+			httpClientFactory.Setup(m => m.CreateClient()).Returns(new HttpClient());
 
-			GoogleHttpClient googleHttpClient = new GoogleHttpClient(googleHttpClientFactory.Object, apiKey);
+			GoogleApiClient googleHttpClient = new GoogleApiClient(httpClientFactory.Object, apiKey);
 			GoogleApiUrlFactory googleApiUrlFactory = new GoogleApiUrlFactory(apiKey);
 
-			_invoker = new PlacesApiInvoker(googleHttpClient, googleApiUrlFactory);
+			_invoker = new GooglePlacesApiInvoker(googleHttpClient, googleApiUrlFactory);
 		}
 
 		[TestMethod]
 		public async Task SearchPlace_WithKeyword_ReturnsPlace()
 		{
 			string input = "caseiro";
-			var result = await _invoker!.SearchPlaceAsync(input);
+			var result = await _invoker!.SearchPlacesAsync(input);
 
 			Assert.IsNotNull(result);
 			Assert.IsNotNull(result.Places);
