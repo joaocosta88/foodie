@@ -18,11 +18,14 @@ namespace Foodie.GoogleApis {
 		{
 			var url = _googleApiUrlFactory.GetPlacesV2ApiSearchUrl();
 
+			
 			return await _googleHttpClient.MakePostRequestAsync<GooglePlaceSearchResult>(url, new
 			{
-				textQuery = input
+				textQuery = input,
+				includedType= "restaurant",
+				strictTypeFiltering = true
 			}, new Dictionary<string, string> {
-				{ "X-Goog-FieldMask", "places.displayName,places.name,places.formattedAddress,places.addressComponents,places.shortFormattedAddress,places.id,places.location" }});
+				{ "X-Goog-FieldMask", "places.displayName,places.name,places.formattedAddress,places.primaryType,places.types,places.addressComponents,places.shortFormattedAddress,places.id,places.location" }});
 		}
 
 		public async Task<GooglePlace> GetPlaceDetails(string placeId)

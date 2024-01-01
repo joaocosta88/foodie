@@ -33,17 +33,21 @@
 	}
 
 		map.fitBounds(bounds)
-					}
+							}
 
 	initMap();
 </script>
 
 <div id="map-container" style="display:flex; flex-direction: row;">
-	<div id=results-list>
-		@foreach (var place in Model)
-		{
-			@await Html.PartialAsync("ListEntry", place)
-		}
+	<div >
+		<ul id="search-result-list">
+			@foreach (var place in Model)
+			{
+				<li class="search-result-entry" >
+					@(await Html.PartialAsync("ListEntry", place))
+					</li>
+			}
+		</ul>
 	</div>
 	<div id="map"></div>
 </div>
